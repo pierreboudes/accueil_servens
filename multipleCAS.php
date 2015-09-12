@@ -92,7 +92,7 @@ phpCAS::setNoCasServerValidation();
 function login() {
     global $linkcas;
     global $auth;
-
+    global $auth_default;
     phpCAS::forceAuthentication();
 
     /* puisque ça fonctionne on continue pendant 30 jours avec le même CAS */
