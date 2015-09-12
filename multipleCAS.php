@@ -58,7 +58,7 @@ function _getclean($s) {
     }
 }
 
-function cookieclean($s) {
+function _cookieclean($s) {
     global $link;
     if (isset($_COOKIE[$s])) {
         if(get_magic_quotes_gpc()) {
@@ -76,10 +76,10 @@ function cookieclean($s) {
 $auth = "univ";
 
 if (isset($_COOKIE["painAuthentication"])) {
-        $auth = cookieclean("painAuthentication");
+        $auth = _cookieclean("painAuthentication");
 }
 if (isset($_GET["cas"])) {
-    $auth = getclean("cas");
+    $auth = _getclean("cas");
 }
 
 // error_reporting(E_ALL & ~E_NOTICE);
