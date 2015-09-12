@@ -30,7 +30,7 @@ $auth_provider = array(
     "lipn" => array("server" => "sso.lipn.univ-paris13.fr", "name" => "LIPN")
 );
 
-$auth_default = "ig";
+$auth_default = "univ";
 
 
 /* database connection link required for escaping strings */
@@ -73,7 +73,7 @@ function _cookieclean($s) {
 
 
 /* which authentication to use ? */
-$auth = "univ";
+$auth = $auth_default;
 
 if (isset($_COOKIE["painAuthentication"])) {
         $auth = _cookieclean("painAuthentication");
@@ -88,17 +88,18 @@ phpCAS::client(CAS_VERSION_2_0,$auth_provider["$auth"]["server"],443,'/cas/',tru
 // phpCAS::setDebug();
 phpCAS::setNoCasServerValidation();
 
-phpCAS::forceAuthentication();
-
-/* S'en souvenir pour la prochaine fois */
-if ($auth != $auth_default) {
-    /* puisque ça fonctionne on continue pendant 30 jours avec le même CAS */
-    setcookie("painAuthentication", $auth, time() + 3600 * 24 * 30);
-}
 
 function login() {
     global $linkcas;
     global $auth;
+
+    phpCAS::forceAuthentication();
+
+    /* puisque ça fonctionne on continue pendant 30 jours avec le même CAS */
+    if ($auth != $auth_default) {
+         setcookie("painAuthentication", $auth, time() + 3600 * 24 * 30,'/');
+    }
+
     $login =  phpCAS::getUser();
     if ($auth != "univ") {
         $query = "SELECT login FROM minoterie_login WHERE provider LIKE '$auth' AND alt_login LIKE '$login' LIMIT 1";
@@ -108,5 +109,9 @@ function login() {
         }
     }
     return $login;
+}
+
+if (isset($_GET["cas"])) {
+    login();
 }
 ?>
