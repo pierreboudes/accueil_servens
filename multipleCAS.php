@@ -21,7 +21,6 @@ if (isset($_GET["cas"]) && ($_GET["cas"] != "univ")) {
 }
 
 // error_reporting(E_ALL & ~E_NOTICE);
-
 phpCAS::client(CAS_VERSION_2_0,$auth_provider["$auth"]["server"],443,'/cas/',true);
 
 // phpCAS::setDebug();

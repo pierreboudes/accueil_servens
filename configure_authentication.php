@@ -10,7 +10,7 @@ function configurer_authentication_php () {
     global $auth_provider;
 
 
-    echo "<p>Vous utilisez actuellement le service central d'authentification (CAS) ";
+    echo "<p>Vous utilisez actuellement le service d'authentification (CAS) ";
     echo $auth_provider["$auth"]["name"].".";
     echo "<ul><li>Votre login CAS est <b>".phpCAS::getUser()."</b>.</li>";
     echo "<li>Votre login Pain est <b>".$login."</b>.</li>";
@@ -30,10 +30,12 @@ function configurer_authentication_php () {
         }
     }
     if ($no_alternative) {
-        echo "<li>Vous n'avez pas donné à Pain d'autre login CAS. ";
+        echo "<li>Vous n'avez pas donné à Pain d'autre login de service d'authnetification. ";
         //            echo "Vous pouvez le renseigner ci-dessous.".
     }
-    //    echo "En renseignant un autre mécanisme d'authentification que celui de l'université Paris 13 vous pouvez accéder à Pain même quand le CAS en panne ou fortement ralenti. </li>"
+    //    echo "En renseignant un autre mécanisme d'authentification
+    //    que celui de l'université Paris 13 vous pouvez accéder à
+    //    Pain même quand le service d'authnetification de l'université en panne ou fortement ralenti. </li>"
     echo "<ul>";
 }
 
