@@ -36,7 +36,7 @@ $auth_default = "ig";
 /* which authentication to use ? */
 $auth = "univ";
 
-if ((isset($_COOKIE["painAuthentication"])) {
+if (isset($_COOKIE["painAuthentication"])) {
         $auth = cookieclean("painAuthentication");
 }
 if (isset($_GET["cas"])) {
