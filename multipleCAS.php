@@ -1,5 +1,6 @@
 <?php
 require_once('CAS.php');
+require_once('commun/minoterie/utils.php');
 
 /* nos differents CAS */
 $auth_provider = array(
@@ -9,15 +10,16 @@ $auth_provider = array(
     "lipn" => array("server" => "sso.lipn.univ-paris13.fr", "name" => "LIPN")
 );
 
+$auth_default = "ig";
 
 /* which authentication to use ? */
 $auth = "univ";
 
-if ((isset($_COOKIE["painAuthentication"]) && $_COOKIE["painAuthentication"] != "univ")) {
-    $auth = $_COOKIE["painAuthentication"];
+if ((isset($_COOKIE["painAuthentication"])) {
+        $auth = cookieclean("painAuthentication");
 }
-if (isset($_GET["cas"]) && ($_GET["cas"] != "univ")) {
-    $auth = $_GET["cas"];
+if (isset($_GET["cas"])) {
+    $auth = getclean("cas");
 }
 
 // error_reporting(E_ALL & ~E_NOTICE);
@@ -29,7 +31,7 @@ phpCAS::setNoCasServerValidation();
 phpCAS::forceAuthentication();
 
 /* S'en souvenir pour la prochaine fois */
-if ($auth != "univ") {
+if ($auth != $auth_default) {
     /* puisque ça fonctionne on continue pendant 30 jours avec le même CAS */
     setcookie("painAuthentication", $auth, time() + 3600 * 24 * 30);
 }
