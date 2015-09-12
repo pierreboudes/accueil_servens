@@ -33,6 +33,12 @@ $auth_provider = array(
 
 $auth_default = "ig";
 
+
+/* database connection link required for escaping strings */
+require("commun/minoterie/iconnect.php");
+$linkcas = $link;
+$linkcas->query("SET NAMES 'utf8'");
+
 /* which authentication to use ? */
 $auth = "univ";
 
@@ -56,11 +62,6 @@ if ($auth != $auth_default) {
     /* puisque ça fonctionne on continue pendant 30 jours avec le même CAS */
     setcookie("painAuthentication", $auth, time() + 3600 * 24 * 30);
 }
-
-require("commun/minoterie/iconnect.php");
-$linkcas = $link;
-$linkcas->query("SET NAMES 'utf8'");
-
 
 function login() {
     global $linkcas;
