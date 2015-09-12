@@ -21,7 +21,6 @@
  */
 
 require_once('CAS.php');
-require_once('commun/minoterie/utils.php');
 
 /* nos differents CAS */
 $auth_provider = array(
@@ -38,6 +37,40 @@ $auth_default = "ig";
 require("commun/minoterie/iconnect.php");
 $linkcas = $link;
 $linkcas->query("SET NAMES 'utf8'");
+
+
+/** recupere une chaine passee en HTTP/GET ou POST
+ */
+function _getclean($s) {
+    global $link;
+    if (isset($_GET[$s])) {
+	$source = $_GET[$s];
+    } else if (isset($_POST[$s])) {
+	$source = $_POST[$s];
+    } else {
+	return NULL;
+    }
+    if(get_magic_quotes_gpc()) {
+	return trim(htmlspecialchars($link->real_escape_string(stripslashes($source)), ENT_QUOTES));
+    }
+    else {
+	return trim(htmlspecialchars($link->real_escape_string($source), ENT_QUOTES));
+    }
+}
+
+function cookieclean($s) {
+    global $link;
+    if (isset($_COOKIE[$s])) {
+        if(get_magic_quotes_gpc()) {
+            return trim(htmlspecialchars($link->real_escape_string(stripslashes(($_COOKIE[$s]))), ENT_QUOTES));
+        }
+        else {
+            return trim(htmlspecialchars($link->real_escape_string($_COOKIE[$s]), ENT_QUOTES));
+        }
+    }
+    else return NULL;
+}
+
 
 /* which authentication to use ? */
 $auth = "univ";
